@@ -86,6 +86,26 @@ RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNSearchBar)
     }
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(magnifyColor, UIColor, RNSearchBar)
+{
+    if ([RCTConvert UIColor:json]) {
+        UITextField *textField = [view valueForKey:@"_searchField"];;
+        UIImageView *imageView = (UIImageView *)textField.leftView;
+        imageView.image = [imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        imageView.tintColor = [RCTConvert UIColor:json];
+    }
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(clearColor, UIColor, RNSearchBar)
+{
+    if ([RCTConvert UIColor:json]) {
+        UITextField *textField = [view valueForKey:@"_searchField"];;
+        UIButton *button = [textField valueForKey:@"_clearButton"];
+        UIImage *image = [button imageForState:UIControlStateNormal];
+        [button setImage:[[self class] imageWithImage:image tintColor:[RCTConvert UIColor:json]] forState:UIControlStateNormal];
+    }
+}
+
 - (NSDictionary *)constantsToExport
 {
   return @{
