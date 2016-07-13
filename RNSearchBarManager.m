@@ -141,5 +141,23 @@ RCT_EXPORT_METHOD(focus:(nonnull NSNumber *)reactTag)
      }];
 }
 
++ (UIImage *) imageWithImage:(UIImage *)image tintColor:(UIColor *)tintColor
+{
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGRect rect = (CGRect){ CGPointZero, image.size };
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
+    [image drawInRect:rect];
+    
+    CGContextSetBlendMode(context, kCGBlendModeSourceIn);
+    [tintColor setFill];
+    CGContextFillRect(context, rect);
+    
+    UIImage *imageTinted  = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return imageTinted;
+}
+
 
 @end
